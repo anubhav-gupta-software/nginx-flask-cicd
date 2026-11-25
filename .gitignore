@@ -1,0 +1,18 @@
+# Terraform state holds resource IDs and must stay local.
+*.tfstate
+*.tfstate.*
+.terraform.tfstate.lock.info
+
+# Provider plugins downloaded by terraform init.
+.terraform/
+
+# Saved plans can contain infrastructure details.
+*.tfplan
+tfplan
+
+# Local secrets.
+.env
+*.pem
+credentials.json
+override.tf
+*_override.tf
