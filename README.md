@@ -1,8 +1,8 @@
-# nginx-flask-proxy
-
-Option 1: Secure Web Application.
+# nginx-flask-cicd
 
 Nginx sits in front of a Flask app. Terraform creates both containers and one user-defined Docker network. Only Nginx is published, on `127.0.0.1:8080`. Flask has no host port. Nginx reaches it by the container name `flask`, not by an IP address.
+
+GitHub Actions repeats that deploy on every push to `main`. The job runs on a GitHub-hosted Ubuntu runner, builds the Flask image, applies this Terraform configuration, curls the proxy, and then destroys the containers.
 
 The Nginx config is bind-mounted from `nginx/nginx.conf`. That file is what turns Nginx into the reverse proxy.
 
@@ -35,3 +35,13 @@ Collect the test output above before destroying.
 ```bash
 terraform destroy
 ```
+
+## CI
+
+Push to `main`. GitHub Actions starts `.github/workflows/deploy.yml` automatically.
+
+```bash
+git push origin main
+```
+
+Open the Actions tab and confirm the `Deploy and verify` run is green. The verify step should print `flask ok` and `{"status":"ok"}`.
